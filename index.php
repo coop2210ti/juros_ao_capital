@@ -24,7 +24,7 @@ if ((isset ($_SESSION["sobrasCpfcnpj"]) == true ) AND (isset ($_SESSION["sobrasP
     <meta name="sb.validation_hash" content="BLI-DzClZoExhiAwBFvCSsFhevjIepPOdSiehLnVgJrRxMaiSnLDSDICBPBaBHHtoPwREsIhPoJzfOcnuLmmoRAAOTFSkViETcRB" /> 
 
     <!-- Page title -->
-    <title>Resultados | Sicredi Pernambucred</title>
+    <title>Juros ao Capital | Sicredi Pernambucred</title>
 
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <link rel="shortcut icon" href="favicon.ico" />
