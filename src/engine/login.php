@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 ob_start();
 session_start();
 
@@ -65,7 +69,7 @@ else{
 
 
 //PAGAMENTO DE JUROS AO CAPITAL 
-$query = mysqli_query($con,"SELECT * FROM valores WHERE cpf_cnpj = '$cpfcnpj' AND senha = '$password' ");
+$query = mysqli_query($con,"SELECT * FROM valores WHERE cpf_cnpj = '$cpfcnpj' AND senha = '$password' ") or die(mysqli_error($con));
 
 $num = mysqli_num_rows($query);
 $resul = mysqli_fetch_assoc($query);

@@ -221,10 +221,6 @@ $.ajax({
         success:function(response){
             if(response==1){ 
                 window.location.href='main.php'
-            }
-            else if(response=='nao'){
-                toastr.error('Sistema de sobras temporariamente indisponível! Estamos trabalhando para reestabelecer a comunicação o mais breve possível.');
-                $("#spinner").empty();
             } 
             else {
                 toastr.error('Usuário ou senha inválidos!');
@@ -268,11 +264,7 @@ $.ajax({
         success:function(response){
             if(response==1){ 
                 window.location.href='main.php'
-            }
-            else if(response=='nao'){
-                toastr.error('Sistema de sobras temporariamente indisponível! Estamos trabalhando para reestabelecer a comunicação o mais breve possível.');
-                $("#spinner").empty();
-            }  
+            } 
             else {
                 toastr.error('Usuário ou senha inválidos!');
                 $("#spinner").empty();
