@@ -13,10 +13,14 @@ $password = $_POST['password'];
 $_SESSION["sobrasCpfcnpj"] = '';
 $_SESSION["sobrasPassword"] = '';
 $_SESSION["sobrasNome"] = '';
+$_SESSION["sobrasCC"] = '';
 
 if(strlen($cpfcnpj) > 14) {
 
-$query = mysqli_query($con,"SELECT * FROM acesso WHERE cpfCnpj = '$cpfcnpj' AND cc = '$password' ");
+//PAGAMENTO DE JUROS AO CAPITAL 
+$password = ltrim($password,'0');
+$query    = mysqli_query($con,"SELECT * FROM valores WHERE cpf_cnpj = '$cpfcnpj' AND senha = '$password' ");
+
 $num = mysqli_num_rows($query);
 $resul = mysqli_fetch_assoc($query);
 
@@ -28,23 +32,14 @@ if ($num == 0) {
     unset ($_SESSION["sobrasCpfcnpj"]);
     unset ($_SESSION["sobrasPassword"]);
     unset ($_SESSION["sobrasNome"]);
+    unset ($_SESSION["sobrasCC"]);
     session_destroy();
 
     echo 0;
 
 
 }
-else{
 
-if($resul['liberado'] == 'nao'){
-
-    unset ($_SESSION["sobrasCpfcnpj"]);
-    unset ($_SESSION["sobrasPassword"]);
-    unset ($_SESSION["sobrasNome"]);
-    session_destroy();
-
-    echo 'nao';
-}
 else{
 //---------------SETA AS CONFIGURA��ES DE TEMPO DE INATIVIDADE DA SESS�O-------------------//
   date_default_timezone_set("America/Recife");
@@ -53,10 +48,11 @@ else{
   $_SESSION['time'] = time(); // armazena o momento em que o usu�rio � autenticado
   $_SESSION['limite'] = $tempolimite; // armazena o tempo limite sem atividade
 
-
-  $_SESSION["sobrasCpfcnpj"] = $resul['cpfCnpj'];
-  $_SESSION["sobrasPassword"] = $resul['dataNascimento'];
-  $_SESSION["sobrasNome"] = $resul['nome'];
+  //PAGAMENTO DE JUROS AO CAPITAL 
+  $_SESSION["sobrasCpfcnpj"] = $resul['cpf_cnpj'];
+  $_SESSION["sobrasPassword"] = $resul['senha'];
+  $_SESSION["sobrasNome"] = $resul['associado'];
+  $_SESSION["sobrasCC"] = $resul['cc'];
 
   echo 1;
 
@@ -65,12 +61,12 @@ else{
 }
 
 
-}
-
 else{
 
 
-$query = mysqli_query($con,"SELECT * FROM acesso WHERE cpfCnpj = '$cpfcnpj' AND dataNascimento = '$password' ");
+//PAGAMENTO DE JUROS AO CAPITAL 
+$query = mysqli_query($con,"SELECT * FROM valores WHERE cpf_cnpj = '$cpfcnpj' AND senha = '$password' ");
+
 $num = mysqli_num_rows($query);
 $resul = mysqli_fetch_assoc($query);
 
@@ -82,23 +78,14 @@ if ($num == 0) {
     unset ($_SESSION["sobrasCpfcnpj"]);
     unset ($_SESSION["sobrasPassword"]);
     unset ($_SESSION["sobrasNome"]);
+    unset ($_SESSION["sobrasCC"]);
     session_destroy();
 
     echo 0;
 
 
 }
-else{
 
-if($resul['liberado'] == 'nao'){
-
-    unset ($_SESSION["sobrasCpfcnpj"]);
-    unset ($_SESSION["sobrasPassword"]);
-    unset ($_SESSION["sobrasNome"]);
-    session_destroy();
-
-    echo 'nao';
-}
 else{  
 
 //---------------SETA AS CONFIGURA��ES DE TEMPO DE INATIVIDADE DA SESS�O-------------------//
@@ -108,20 +95,17 @@ else{
   $_SESSION['time'] = time(); // armazena o momento em que o usu�rio � autenticado
   $_SESSION['limite'] = $tempolimite; // armazena o tempo limite sem atividade
 
-
-  $_SESSION["sobrasCpfcnpj"] = $resul['cpfCnpj'];
-  $_SESSION["sobrasPassword"] = $resul['dataNascimento'];
-  $_SESSION["sobrasNome"] = $resul['nome'];
+  //PAGAMENTO DE JUROS AO CAPITAL 
+  $_SESSION["sobrasCpfcnpj"] = $resul['cpf_cnpj'];
+  $_SESSION["sobrasPassword"] = $resul['senha'];
+  $_SESSION["sobrasNome"] = $resul['associado'];
+  $_SESSION["sobrasCC"] = $resul['cc'];
 
   echo 1;
 
 }
 
 }
-
-
-}
-
 
 
 

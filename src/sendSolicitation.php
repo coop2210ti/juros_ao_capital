@@ -1,5 +1,5 @@
 <?php
-date_default_timezone_set('America/Sao_Paulo');
+date_default_timezone_set('America/Recife');
 session_start();
 
 include('connect/connect.php');
@@ -43,17 +43,10 @@ else {
 
 $cpfcnpj = $_POST['cpfcnpj'];
 $valorSolicitado = $_POST['valorSolicitado'];
-$aplicacao = $_POST['aplicacao'];
-$valorAplicacao = $_POST['valorAplicacao'];
-$valorAplicado = '';
 
 $dataAgora = date('d/m/Y');
 $horaAgora = date('H:i:s');
 
-
-if($aplicacao == 'sim'){
-    $valorAplicado = $valorAplicacao;
-}
 
 $ip = $_SERVER["REMOTE_ADDR"];
 $data = date('d/m/Y');
@@ -61,16 +54,9 @@ $hora = date('H:i:s');
 $dateFormated = date('Y-m-d')." ".$hora;
 $nome = $_SESSION["sobrasNome"];
 
+mysqli_query($con, "UPDATE valores SET valor_resgate = '$valorSolicitado', data_resgate = '$data', hora_resgate = '$hora', ip_resgate = '$ip', date_formated = '$dateFormated' WHERE cpf_cnpj = '$cpfcnpj'  ");
 
-if($aplicacao == 'sim' ){
-mysqli_query($con, "UPDATE valores SET valorResgate = '$valorSolicitado', dataResgate = '$data', horaResgate = '$hora', ipResgate = '$ip', valorAplicado = '$valorAplicado', dateFormated = '$dateFormated' WHERE cpf = '$cpfcnpj'  ");
-mysqli_query($con, "INSERT INTO aplicacoes (cpf, nome, valor, data, hora) VALUES ('$cpfcnpj', '$nome', '$valorAplicado', '$dataAgora', '$horaAgora')  ");
-}
-else{
-mysqli_query($con, "UPDATE valores SET valorResgate = '$valorSolicitado', dataResgate = '$data', horaResgate = '$hora', ipResgate = '$ip', dateFormated = '$dateFormated' WHERE cpf = '$cpfcnpj'  ");
-}
-
-$checkQuery = mysqli_query($con, "SELECT * FROM valores WHERE cpf = '$cpfcnpj' AND valorResgate != '' AND dataResgate != '' AND horaResgate != '' AND ipResgate != '' ");
+$checkQuery = mysqli_query($con, "SELECT * FROM valores WHERE cpf_cnpj = '$cpfcnpj' AND valor_resgate != '' AND data_resgate != '' AND hora_resgate != '' AND ip_resgate != '' ");
 $numCheckQuery  = mysqli_num_rows($checkQuery);
 
 if($numCheckQuery > 0){

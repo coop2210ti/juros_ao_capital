@@ -78,21 +78,20 @@ if ((isset ($_SESSION["sobrasCpfcnpj"]) == true ) AND (isset ($_SESSION["sobrasP
     <div class="row">
         <div class="col-md-12">
             <div class="text-center m-b-md">
-                <!-- <img src="src/img/logo_sicredi.png" style="width:170px;"><br> -->
                 <span style="font-family:Exo 2;color:#64C832;font-weight:700;font-size:35px;line-height:1em">Sicredi Pernambucred</span>
                 <br><br><br>
-                <h4 style="font-weight:bold;">Solicitação dos Resultados</h4>
+                <h4 style="font-weight:bold;">Solicitação de Juros ao Capital</h4>
             </div>
             <br>
             <div class="hpanel">
                 <div class="panel-body">
                         <form id="loginForm">
                             <div class="form-group">
-                                <label class="control-label" for="username">CPF/CNPJ*:</label>
+                                <label class="control-label" for="username">CPF/CNPJ:</label>
                                 <input type="text" title="Informe seu CPF ou CNPJ" id="cpfcnpj" name="cpfcnpj" maxlength="18" onkeypress="mascaraMutuario(this,cpfCnpj)" class="form-control">
                             </div>
                             <div class="form-group">
-                                <label class="control-label" for="password">Senha*:</label>
+                                <label class="control-label" for="password">Senha:</label>
                                 <input type="password" title="Informe sua senha" id="password" class="form-control" maxlength="10" placeholder="ddmmaaaa">
                             </div>
                         </form>
@@ -103,7 +102,7 @@ if ((isset ($_SESSION["sobrasCpfcnpj"]) == true ) AND (isset ($_SESSION["sobrasP
     </div>
     <div class="row">
         <div class="col-md-12 text-center">
-            <strong>Dúvidas</strong>: (81) 3117-9110
+            <strong>Dúvidas</strong>: 81 3117 9110 (Recife e Região Metropolitana) e <br>0800 400 9110 (Demais localidades).
         </div>
     </div>
     
@@ -123,7 +122,7 @@ if ((isset ($_SESSION["sobrasCpfcnpj"]) == true ) AND (isset ($_SESSION["sobrasP
     <!-- Footer-->
     <footer class="footer">
         <span class="pull-right">
-            © Sicredi Pernambucred 2019
+            © Sicredi Pernambucred 2020
         </span>
     </footer>
 

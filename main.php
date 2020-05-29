@@ -136,13 +136,13 @@ hr {
     </div>
     <div id="logo" class="light-version">
         <span>
-            RESULTADOS
+            Juros ao Capital
         </span>
     </div>
     <nav role="navigation">
-        <div class="header-link hide-menu"><i class="fa fa-bars"></i></div>
+        <div class="header-link hide-menu"><img style="height:18px;" src="src/img/menu.png"></div>
         <div class="small-logo">
-            <span class="text-primary">RESULTADOS</span>
+            <span class="text-primary">Juros ao Capital</span>
         </div>
 
         <div style="padding-top:13px;">
@@ -168,15 +168,18 @@ hr {
         <ul class="nav" id="side-menu">
 
             <li onclick='javascript:window.open("src/assets/print.php", "popupsobras", "width=800, height=750, left=500, scrollbars=auto, location=no, directories=no, status=no, menubar=no, toolbar=no, resizable=no");'>
-                <a href="#"><span class="nav-label"><i style="color:#62C435;" class="fa fa-print"></i> Imprimir</span> </a>
+                <a href="#"><span class="nav-label"><i style="color:#62C435;" class="fa fa-print"></i> I<span style="text-transform:lowercase;">mprimir</span></span> </a>
             </li>
             
             <li class="">
-                <a href="src/engine/logout.php"><span class="nav-label"><i style="color:#62C435;" class="fa fa-sign-out"></i> Sair</span> </a>
+                <a href="src/engine/logout.php"><span class="nav-label"><i style="color:#62C435;" class="fa fa-sign-out"></i> S<span style="text-transform:lowercase;">air</span></span> </a>
             </li>
 
         </ul>
     </div>
+    <footer>
+        <span style="position: absolute;bottom: 80px;width: 100%;height: 20px;padding-left:10px"><b>Dúvidas: </b>81 3117 9110 (Recife e Região Metropolitana) e <br>0800 400 9110 (Demais localidades).</span>
+    </footer>
 </aside>
 
 
@@ -210,116 +213,28 @@ hr {
                               
                     </div>
 
+                    <div class="row" style="padding-left:8px;">
+
+                    <span>&nbsp;&nbsp;Conta Corrente:&nbsp;&nbsp;<b><?php echo $_SESSION["sobrasCC"];?></b></span>
+                              
+                    </div>
+
                     <br><br>
 
 <?php
 $cpfcnpj = $_SESSION["sobrasCpfcnpj"];
-$check = mysqli_query($con, "SELECT * FROM valores WHERE cpf = '$cpfcnpj' ");
+
+//PAGAMENTO DE JUROS AO CAPITAL 
+$check = mysqli_query($con, "SELECT * FROM valores WHERE cpf_cnpj = '$cpfcnpj' ");
+
 $resul = mysqli_fetch_assoc($check);
 
 $ccAssociado = $resul['cc'];
 
 $dataDia = date('Y-m-d');
-$dataCorte = '2019-05-13';
-
-$queryIntegr = mysqli_query($con, "SELECT * FROM ultima_intregalizacao WHERE TIMESTAMPDIFF(DAY,data,'$dataCorte') >= 90 AND cc = '$ccAssociado' ");
-$numIntegr = mysqli_num_rows($queryIntegr);
-
-$queryPqdn = mysqli_query($con, "SELECT * FROM pqdn WHERE cpf = '$cpfcnpj' ");
-$resulPqdn = mysqli_fetch_assoc($queryPqdn);
-$renda = $resulPqdn['renda'];
-$saldoCapital = $resulPqdn['saldocapital'];
-$carteira = $resulPqdn['carteira'];
-
-$queryCartao = mysqli_query($con, "SELECT * FROM cartaoatraso WHERE cpf = '$cpfcnpj' AND diasAtraso > 5 ");
-$numCartao = mysqli_num_rows($queryCartao);
-
-$queryEmprestimo = mysqli_query($con, "SELECT * FROM ultimo_pag_emprestimo WHERE cpf = '$cpfcnpj' AND TIMESTAMPDIFF(DAY,data,'$dataDia') > 5");
-$numEmprestimo = mysqli_num_rows($queryEmprestimo);
-
-$queryConsorcio = mysqli_query($con, "SELECT * FROM consorcioatraso WHERE cpf = '$cpfcnpj' AND diasAtraso > 5 ");
-$numConsorcio = mysqli_num_rows($queryConsorcio);
-
-$queryBaixaTotalCP = mysqli_query($con, "SELECT * FROM baixatotalcp WHERE cc = '$ccAssociado' ");
-$numBaixaTotalCP = mysqli_num_rows($queryBaixaTotalCP);
-
-$queryInadimplente1Ano = mysqli_query($con, "SELECT EXISTS(SELECT 1 FROM ultima_intregalizacao WHERE cc = '$ccAssociado') AS cc");
-$resulInadimplente1Ano = mysqli_fetch_assoc($queryInadimplente1Ano);
-
-$inadimplente = '';
 
 
-if($carteira == '641' OR $carteira == '642' OR $carteira == '643'){
-    $inadimplente = 'sim';
-}
-elseif($numCartao != 0){
-    $inadimplente = 'sim';
-}
-elseif($numEmprestimo != 0){
-    $inadimplente = 'sim';
-}
-elseif($numConsorcio != 0){
-    $inadimplente = 'sim';
-}
-elseif($numBaixaTotalCP != 0){
-    $inadimplente = 'sim';
-}
-elseif($resulInadimplente1Ano['cc'] == 0){
-    $inadimplente = 'sim';
-}
-elseif( ($numIntegr != 0) AND ($saldoCapital < 15000) ){
-    $inadimplente = 'sim';
-}
-elseif( ($renda == 0) AND ($numIntegr != 0) AND ($saldoCapital < 15000) ){
-    $inadimplente = 'sim';
-}
-/*elseif( ($renda == 0) AND ($numIntegr == 0) AND ($saldoCapital < 15000) ){
-    $inadimplente = 'sim';
-}*/
-
-if( ($numIntegr != 0) AND ($saldoCapital < 15000) AND ($saldoCapital >= $renda) AND $renda != 0){
-    $inadimplente = '';
-}
-
-$checkInadimplentePrevious = $resul['inadimplente'];
-
-if($checkInadimplentePrevious == ''){
-
-    mysqli_query($con, "UPDATE valores SET inadimplente = '$inadimplente' WHERE cpf = '$cpfcnpj' ");
-    $checkInadimplente = mysqli_query($con, "SELECT cpf, inadimplente FROM valores WHERE cpf = '$cpfcnpj' ");
-    $resulCheckInadimplente = mysqli_fetch_assoc($checkInadimplente);
-    $checkInadimplentePrevious = $resulCheckInadimplente['inadimplente'];
-
-}
-
-
-if($checkInadimplentePrevious == 'sim') {
-?> 
-
-
-                <div id="contentValue" class="col-lg-6 col-md-12 col-sm-12">
-
-                    <div class="row" style="text-align:justify;padding:8px;">
-                     
-                    <span>Caro associado,<br>
-                    Para liberação das suas sobras 2018, faz-se necessário o seu comparecimento à sua unidade de atendimento, ou entrar em contato com nossa Central de Relacionamento através do fone <b>(81) 3117-9110</b>.
-                    </span>   
-
-                    </div>
-
-
-                </div>
-
-
-
-
-
-
-<?php
-}    
-
-elseif($resul['valorResgate'] != '') {
-
+if($resul['valor_resgate'] != '') {
 ?>
 
 
@@ -331,8 +246,8 @@ elseif($resul['valorResgate'] != '') {
                      
                     <span>Solicitação enviada com sucesso!<br>
                     O valor solicitado até às 15:00 hrs, será creditado em sua conta corrente até 02 (dois) dias úteis.<br><br>
-                    Valor Solicitado: <b style="color:#006922">R$ <?php echo number_format($resul['valorResgate'], 2, ',', '.');?></b><br>
-                    Data Solicitação: <b style="color:#006922"><?php echo $resul['dataResgate']?></b>
+                    Valor Solicitado: <b style="color:#006922">R$ <?php echo number_format($resul['valor_resgate'], 2, ',', '.');?></b><br>
+                    Data Solicitação: <b style="color:#006922"><?php echo $resul['data_resgate'].' às '.$resul['hora_resgate']?></b>
                     </span>   
 
                     </div>
@@ -352,7 +267,7 @@ else{
                 <!-- Imagem carta verde -->
                 <div class="row">
                 <div class="col-lg-6 col-md-12 col-sm-12">
-                <img src="src/img/bannercartaverde.jpg" style="width:100%;">
+                <img src="src/img/bannercartaverde_2020_rc.jpg" style="width:100%;">
                 </div>  
                 </div>
 
@@ -363,8 +278,8 @@ else{
 
                     <span>Associado, <br><br>
 
-                    Estamos vivendo um momento de adversidade nunca vivido pelos brasileiros. Em vista disso nossa AGO na qual é analisada a prestação de contas do exercício, que estava agendada para o dia 30/03/20, por força do Decreto Estadual nº 48.809/2020 que impôs o distanciamento social foi suspensa, tendo o BACEN flexibilizado,  em virtude da pandemia do CIVID-19 , o prazo final que anteriormente era até 30 de abril para até o dia 31 de julho de 2020. Em razão disso, a distribuição dos resultados aos associados referente ao exercício de 2019 ficou, da mesma forma, suspensa até a data da realização da referida AGO.
-<br><br>O Conselho de Administração da Sicredi Pernambucred, sensibilizado pelo momento em que a economia está passado, deliberou por antecipar a disponibilidade de resgate dos Juros ao Capital Social, creditados no dia 30/01/2020, na conta capital de cada associado, referentes ao exercício de 2019, antes da distribuição dos resultados referente ao mesmo exercício, em conformidade com a Resolução do BACEN 4.797/2020 que limitou os resgates na Conta Capital.
+                    Estamos vivendo um momento de adversidade nunca vivido pelos brasileiros. Em vista disso nossa Assembléia Geral Ordinária na qual é analisada a prestação de contas do exercício, que estava agendada para o dia 30/03/20, por força do Decreto Estadual nº 48.809/2020 que impôs o distanciamento social foi suspensa, tendo o BACEN flexibilizado,  em virtude da pandemia do CIVID-19 , o prazo final que anteriormente era até 30 de abril para até o dia 31 de julho de 2020. Em razão disso, a distribuição dos resultados aos associados referente ao exercício de 2019 ficou, da mesma forma, suspensa até a data da realização da referida AGO.
+<br><br>O Conselho de Administração da Sicredi Pernambucred, sensibilizado pelo momento em que a economia está passando, deliberou por antecipar a disponibilidade de resgate dos Juros ao Capital Social, creditados no dia 30/01/2020, na conta capital de cada associado, referentes ao exercício de 2019, antes da distribuição dos resultados referente ao mesmo exercício, em conformidade com a Resolução do BACEN 4.797/2020 que limitou os resgates na Conta Capital.
 <br><br>
 
 Veja abaixo os valores destinados a você:</span>   
@@ -378,135 +293,15 @@ Veja abaixo os valores destinados a você:</span>
 
                     <div class="divContent col-lg-6 col-md-6 col-sm-3">
                     <img style="width:50px;" src="src/img/sicredi/cifrao_verde.ico">
-                    <span style="font-weight:bold;">&nbsp;&nbsp;Juros ao Capital</b></span>
+                    <span style="font-weight:bold;">&nbsp;&nbsp;Juros ao Capital Social</b></span>
                     <br><br>
-                    <span>O seu capital social na cooperativa  continua sendo corrigido em 100% do valor da Selic. Vale ressaltar que os 15% de IR incidente já foram retidos na fonte.</span>
+                    <span>O saldo médio do Capital Social que você manteve na sua cooperativa durante o exercício de 2019, continua sendo corrigido em 100% do valor da Selic e, gerou juros. Vale ressaltar que os 15% de IR incidente já foram retidos na fonte.</span>
                     </div>
 
                     <div class="col-lg-3 col-md-3 col-sm-3" style="padding-top:5%;">
-                    <img style="height:21px;" src="src/img/seta.png">
-                    <span style="padding-left:10px;font-weight:bold;">R$ <?php echo number_format($resul['jurosCapital'], 2, ',', '.');?></span>
-                    </div>
+                    <img style="height:21px;" src="src/img/seta2.png">
+                    <span style="padding-left:10px;font-weight:bold;">R$ <?php echo number_format($resul['juros_liquido'], 2, ',', '.');?></span>
 
-                    </div>
-
-                    <!-- <br>
-                     
-                    <div class="row">
-
-                    <div class="divContent col-lg-6 col-md-6 col-sm-3">
-                    <img style="width:50px;" src="src/img/sicredi/cofre_porco_verde.ico">
-                    <span style="font-weight:bold;">&nbsp;&nbsp;Aplicações</span>
-                    <br><br>
-                    <?php if($resul['aplicacoes'] == '0.00' OR $resul['aplicacoes'] == '0'){?>
-                    <span>Que pena! Você não possui aplicação financeira na Sicredi Pernambucred. Aqui o ganho é sensacional. Pense nisso para o próximo ano.</span>
-                    <?php } else{?>
-                    <span>Parabéns! Na Sicredi Pernambucred você ganha duas vezes. Além da excelente rentabilidade da sua aplicação, você ainda recebe expressivos rendimentos em forma de resultados.</span>
-                    <?php }?>
-                    </div>
-
-                    <div class="col-lg-3 col-md-3 col-sm-3" style="padding-top:5%;">
-                    <img style="height:21px;" src="src/img/seta.png">
-                    <span style="padding-left:10px;font-weight:bold;">R$ <?php echo number_format($resul['aplicacoes'], 2, ',', '.');?></span>
-                    </div>
-
-                    </div>
-
-                    <br> 
-
-                    <div class="row">
-
-                    <div class="divContent col-lg-6 col-md-6 col-sm-3">
-                    <img style="width:50px;" src="src/img/sicredi/cracha_verde.ico">
-                    <span style="font-weight:bold;">&nbsp;&nbsp;Conta Corrente</b></span>
-                    <br><br>
-                    <span>O saldo médio que você manteve na sua conta corrente lhe garante parte dos resultados. </span>
-                    </div>
-
-                    <div class="col-lg-3 col-md-3 col-sm-3" style="padding-top:5%;">
-                    <img style="height:21px;" src="src/img/seta.png">
-                    <span style="padding-left:10px;font-weight:bold;">R$ <?php echo number_format($resul['contaCorrente'], 2, ',', '.');?></span>
-                    </div>
-
-                    </div>
-
-                    <br>
-
-                    <div class="row">
-
-                    <div class="divContent col-lg-6 col-md-6 col-sm-3">
-                    <img style="width:50px;" src="src/img/sicredi/documento_cifrao_verde.ico">
-                    <span style="font-weight:bold;">&nbsp;&nbsp;Operações de Crédito</span>
-                    <br><br>
-                    <?php if($resul['operacoesCredito'] == '0.00' OR $resul['operacoesCredito'] == '-'){?>
-                    <span>Você não realizou operações de crédito ao longo do ano na Sicredi Pernambucred. No momento em que precisar realizar os seus sonhos, conte com as taxas diferenciadas da sua cooperativa.</span>
-                    <?php } else{?>
-                    <span>Aqui você ganha duas vezes! Além de ter contado com taxas diferenciadas para operações de crédito, você também recebe parte dos resultados.</span>
-                    <?php }?>                    
-                    </div>
-
-                    <div class="col-lg-3 col-md-3 col-sm-3" style="padding-top:5%;">
-                    <img style="height:21px;" src="src/img/seta.png">
-                    <span style="padding-left:10px;font-weight:bold;">R$ <?php echo number_format($resul['operacoesCredito'], 2, ',', '.');?></span>
-                    </div>
-
-                    </div>
-
-                    <br>
-
-                    <div class="row">
-
-                    <div class="divContent col-lg-6 col-md-6 col-sm-3">
-                    <img style="width:50px;" src="src/img/sicredi/cartao_credito_verde.ico">
-                    <span style="font-weight:bold;">&nbsp;&nbsp;Cartão de Crédito</span>
-                    <br><br>
-                    <?php if($resul['cartoesCredito'] == '0.00' OR $resul['cartoesCredito'] == '-'){?>
-                    <span>Que pena! Você não possui cartão de crédito na Sicredi Pernambucred. Nossos cartões possuem inúmeras vantagens, além de você poder contar com programa de milhagem. Pense nisso para o próximo ano.</span>
-                    <?php } else{?>
-                    <span>Ter cartão de crédito na Sicredi Pernambucred é muito mais vantajoso! Além de você poder contar com programa de milhagem, também recebe parte do que usou, através dos resultados.</span>
-                    <?php }?>
-                    </div>
-
-                    <div class="col-lg-3 col-md-3 col-sm-3" style="padding-top:5%;">
-                    <img style="height:21px;" src="src/img/seta.png">
-                    <span style="padding-left:10px;font-weight:bold;">R$ <?php echo number_format($resul['cartoesCredito'], 2, ',', '.');?></span>
-                    </div>
-
-                    </div>
-
-                    <br>
-                    
-
-                    <div class="row">
-
-                    <div class="divContent col-lg-6 col-md-6 col-sm-3">
-                    <img style="width:50px;" src="src/img/sicredi/lapis_verde.ico">
-                    <span style="font-weight:bold;">&nbsp;&nbsp;Ação Declaratória</span>
-                    <br><br>
-                    <span>Foi deduzido do resultado o percentual de 15% em função do ingresso de ação declaratória. <br>Para mais informações,<button type="button" id="moreInfo" data-toggle="modal" data-target="#modalMoreInfo" style="background:none!important;color:#626768;border:none;cursor:pointer;text-align:center;"><i>clique aqui.</i></button></span>
-                    </div>
-
-                    <div class="col-lg-3 col-md-3 col-sm-3" style="padding-top:5%;">
-                    <img style="height:21px;" src="src/img/seta.png">
-                    <span style="padding-left:10px;font-weight:bold;">- R$ <?php echo number_format($resul['acaoDeclaratoria'], 2, ',', '.');?></span>
-                    </div>
-
-                    </div>
-
-                    <br> -->
-
-                    <div class="row">
-
-                    <div class="divContent col-lg-6 col-md-6 col-sm-3">
-                    <img style="width:50px;" src="src/img/sicredi/grafico_verde.ico">
-                    <span style="font-weight:bold;">&nbsp;&nbsp;Valor do Resultado Líquido</span>
-                    <br><br>
-                    <span>Valor do resultado líquido creditados em sua conta capital.</span>
-                    </div>
-
-                    <div class="col-lg-3 col-md-3 col-sm-3" style="padding-top:5%;">
-                    <img style="height:21px;" src="src/img/seta.png">
-                    <span style="padding-left:10px;font-weight:bold;">R$ <?php echo number_format($resul['totalSobras'], 2, ',', '.');?></span>
                     </div>
 
                     </div>
@@ -517,14 +312,14 @@ Veja abaixo os valores destinados a você:</span>
 
                     <div class="divContent col-lg-6 col-md-6 col-sm-3">
                     <img style="width:50px;" src="src/img/sicredi/caixa_eletronico_verde.ico">
-                    <span style="font-weight:bold;">&nbsp;&nbsp;Valor Total Para Resgate</span>
+                    <span style="font-weight:bold;">&nbsp;&nbsp;Valor líquido para resgate</span>
                     <br><br>
-                    <span>Total do Resultado + Juros ao Capital.</span>
+                    <span>Valor do resgate líquido creditados em sua conta capital.</span>
                     </div>
 
                     <div class="col-lg-3 col-md-3 col-sm-3" style="padding-top:5%;">
-                    <img style="height:21px;" src="src/img/seta.png">
-                    <span style="padding-left:10px;font-weight:bold;color:#006922;">R$ <?php echo number_format($resul['liquidoResgate'], 2, ',', '.');?></span>
+                    <img style="height:21px;" src="src/img/seta2.png">
+                    <span style="padding-left:10px;font-weight:bold;color:#006922;">R$ <?php echo number_format($resul['juros_liquido'], 2, ',', '.');?></span>
                     </div>
 
                     </div>
@@ -532,9 +327,8 @@ Veja abaixo os valores destinados a você:</span>
                     <br>
 
                     <div class="row" style="text-align:justify;padding:8px;">
-                     
-                    <span>Apenas cooperativas distribuem os resultados com os seus associados.<br>
-                    Lembre-se! Quer mais retorno do resultado ao final do ano? Então passe a utilizar ainda mais sua cooperativa de crédito.</span>   
+                
+                    <span>&nbsp;&nbsp;Gente que coopera, cuida!</span>  
 
                     </div>
                     
@@ -543,7 +337,8 @@ Veja abaixo os valores destinados a você:</span>
                     <div class="row">
                     <div class="form-group col-lg-6 col-md-1 col-sm-1">
                         <input type="checkbox" id="confirm" value="sim" class="i-checks form-control">
-                        <label style="width:10px;">&nbsp;Estou&nbsp;ciente&nbsp;das&nbsp;condições&nbsp;estabelecidas,&nbsp;conforme&nbsp;AGO&nbsp;realizada&nbsp;em&nbsp;23/04/2019.</label>
+                        <label style="width:10px;">&nbsp;Estou&nbsp;ciente&nbsp;das&nbsp;condições&nbsp;estabelecidas.</label>
+
                     </div>
                     </div>
 
@@ -554,7 +349,7 @@ Veja abaixo os valores destinados a você:</span>
                     </div>
                     
 
-                    <input type="hidden" id="liquidoResgate" value="<?php echo $resul['liquidoResgate']?>">
+                    <input type="hidden" id="liquidoResgate" value="<?php echo $resul['juros_liquido']?>">
                     <input type="hidden" id="cpfcnpj" value="<?php echo $_SESSION["sobrasCpfcnpj"]?>">
 
 
@@ -582,10 +377,10 @@ Veja abaixo os valores destinados a você:</span>
     <!-- Footer-->
     <footer class="footer">
     <span class="pull-left">
-            <strong>Dúvidas: (81) 3117-9110</strong>
+            <!--<strong>Dúvidas: (81) 3117-9110</strong>-->
         </span>
         <span class="pull-right">
-            © Sicredi Pernambucred 2019
+            © Sicredi Pernambucred 2020
         </span>
     </footer>
 
@@ -608,14 +403,9 @@ Veja abaixo os valores destinados a você:</span>
                    
                                <div class="form-group">
                                     <div class="col-lg-1">
-                                    <label style="width:10px;">Valor&nbsp;resgate:*</label>
+                                    <label style="width:10px;">Valor&nbsp;resgate:</label>
                                     <input style="width:150px;" type="text" id="valorSolicitado" class="form-control">
                                 </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <input type="checkbox" id="aplicacao" value="sim" class="i-checks form-control">
-                                    <label style="width:10px;">&nbsp;Deseja&nbsp;aplicar&nbsp;uma&nbsp;parte&nbsp;do&nbsp;valor&nbsp;resgatado?</label>
                                 </div>
 
                                 </div>
@@ -635,30 +425,7 @@ Veja abaixo os valores destinados a você:</span>
                             </div>
                         </div>
                     </div>
-                </div>
-
-
-
-
-<div class="modal fade hmodal-success" id="modalMoreInfo" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="color-line"></div>
-                            <div class="modal-header">
-                                <h4 class="modal-title">Saiba mais:</h4>
-                                <span class="font-bold">Informe sobre ação declaratória:</span>
-                            </div>
-                            <div class="modal-body">
-                                
-                            <span>* De acordo com recomendação do Comitê Jurídico da Central Sicredi NNE, do valor do resultado será deduzido o percentual de 15% em função do ingresso de ação declaratória com pedido de tutela antecipada para depósito judicial, em função de questionamentos por parte da Secretaria da Receita Federal a qual tem o entendimento que é devido o IRPF sobre o valor do resultado.</span>
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-success" data-dismiss="modal">Fechar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>                
+                </div>            
 
 
 
@@ -701,21 +468,6 @@ $("#getModal").on('click', function(){
 
 });
 
-$("#aplicacao").on('ifChecked', function(){
-
-    
-    $("#divAplicacao").html('<hr/> <span><b>Em até 48hrs, entraremos em contato para escolhermos a melhor opção para a sua aplicação financeira. <br><br> Importante! O valor da aplicação será subtraído do valor do resgate informado acima.</b></span> <br><br> <div class="row"><div class="form-group"><div class="col-lg-1"><label style="width:10px;">Valor&nbsp;aplicação:*</label><input style="width:150px;" type="text" id="valorAplicacao" class="form-control"></div></div> </div> ');
-    
-    $('#valorAplicacao').maskMoney({ thousands: '.', decimal: ',' });
-
-});
-
-$("#aplicacao").on('ifUnchecked', function(){
-
-    $("#divAplicacao").empty();
-   
-});
-
 $('#valorSolicitado').maskMoney({ thousands: '.', decimal: ',' });
 
   jQuery(document).bind("keyup keydown", function(e){
@@ -727,21 +479,9 @@ $('#valorSolicitado').maskMoney({ thousands: '.', decimal: ',' });
 
 $("#enviaSolicitacao").on('click', function(){
 
-var cpfcnpj = $("#cpfcnpj").val();
-var liquidoResgate = parseFloat($("#liquidoResgate").val());
-var valorSolicitado = parseFloat($("#valorSolicitado").val().replace('.','').replace(',','.'));
-var aplicacao = $('#aplicacao:checked').val();
-var valorAplicacao = $('#valorAplicacao').val();
-
-
-if((valorAplicacao != '' || isNaN(valorAplicacao) == false) && valorAplicacao !== undefined){
-    valorAplicacao = parseFloat(valorAplicacao.replace('.','').replace(',','.'));
-}
-
-
-if(aplicacao != 'sim'){
-    aplicacao = '';
-}
+let cpfcnpj = $("#cpfcnpj").val();
+let liquidoResgate = parseFloat($("#liquidoResgate").val());
+let valorSolicitado = parseFloat($("#valorSolicitado").val().replace('.','').replace(',','.'));
 
 if(valorSolicitado == '' || isNaN(valorSolicitado) == true){
         toastr.error('Por favor, informe o valor que deseja resgatar!');
@@ -753,27 +493,9 @@ if(valorSolicitado > liquidoResgate){
         return false;
 }
 
-
-if(aplicacao == 'sim' && (valorAplicacao == '' || isNaN(valorAplicacao) == true) ){
-        toastr.error('Por favor, informe o valor para aplicar!');
-        return false;
-}
-/*else if(valorAplicacao > liquidoResgate){
-    toastr.error('Valor total de resgate e aplicação é maior que o disponível!');
-    return false;
-}*/
-else if(valorSolicitado < valorAplicacao){
-    toastr.error('O valor da aplicação deve ser menor ou igual que o valor resgatado!');
-    return false;
-}
-/*else if( (valorSolicitado != valorAplicacao) && (valorSolicitado+valorAplicacao > liquidoResgate) ){
-    toastr.error('Valor total de resgate e aplicação é maior que o disponível!');
-    return false;
-}*/
-
                     $.ajax({  
                     type:'post', 
-                    data: {'cpfcnpj':cpfcnpj, 'valorSolicitado':valorSolicitado, 'aplicacao':aplicacao, 'valorAplicacao':valorAplicacao},
+                    data: {'cpfcnpj':cpfcnpj, 'valorSolicitado':valorSolicitado},
                     dataType: 'html',
                     url: 'src/sendSolicitation.php',
                     beforeSend: function(){
@@ -787,13 +509,12 @@ else if(valorSolicitado < valorAplicacao){
                       }
                       else{
                           alert('ERRO NA CONEXÃO COM O SISTEMA! CONTATE O SUPORTE.');
-                          //setTimeout(function(){ location.reload(true) }, 3000);
 
                       } 
                       
                     },
                     error: function(){
-                    alert('Erro no servidor! Procure o administrador do sistema!');
+                        alert('Erro no servidor! Procure o administrador do sistema!');
                     }
                     });
 
