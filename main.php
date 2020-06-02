@@ -295,7 +295,7 @@ Veja abaixo os valores destinados a você:</span>
                     <img style="width:50px;" src="src/img/sicredi/cifrao_verde.ico">
                     <span style="font-weight:bold;">&nbsp;&nbsp;Juros ao Capital Social</b></span>
                     <br><br>
-                    <span>O saldo médio do Capital Social que você manteve na sua cooperativa durante o exercício de 2019, continua sendo corrigido em 100% do valor da Selic e, gerou juros. Vale ressaltar que os 15% de IR incidente já foram retidos na fonte.</span>
+                    <span>O saldo médio do Capital Social que você manteve na sua cooperativa durante o exercício de 2019, continua sendo corrigido em 100% do valor da Selic e gerou juros. Vale ressaltar que os 15% de IR incidente já foram retidos na fonte.</span>
                     </div>
 
                     <div class="col-lg-3 col-md-3 col-sm-3" style="padding-top:5%;">
@@ -328,7 +328,7 @@ Veja abaixo os valores destinados a você:</span>
 
                     <div class="row" style="text-align:justify;padding:8px;">
                 
-                    <span>&nbsp;&nbsp;Gente que coopera, cuida!</span>  
+                    <span>&nbsp;&nbsp;Isso é faz juntos por você.</span>  
 
                     </div>
                     
