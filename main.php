@@ -278,11 +278,11 @@ else{
 
                     <span>Associado, <br><br>
 
-                    Estamos vivendo um momento de adversidade nunca vivido pelos brasileiros. Em vista disso nossa Assembléia Geral Ordinária na qual é analisada a prestação de contas do exercício, que estava agendada para o dia 30/03/20, por força do Decreto Estadual nº 48.809/2020 que impôs o distanciamento social foi suspensa, tendo o BACEN flexibilizado,  em virtude da pandemia do COVID-19 , o prazo final que anteriormente era até 30 de abril para até o dia 31 de julho de 2020. Em razão disso, a distribuição dos resultados aos associados referente ao exercício de 2019 ficou, da mesma forma, suspensa até a data da realização da referida AGO.
-<br><br>O Conselho de Administração da Sicredi Pernambucred, sensibilizado pelo momento em que a economia está passando, deliberou por antecipar a disponibilidade de resgate dos Juros ao Capital Social, creditados no dia 30/01/2020, na conta capital de cada associado, referentes ao exercício de 2019, antes da distribuição dos resultados referente ao mesmo exercício, em conformidade com a Resolução do BACEN 4.797/2020 que limitou os resgates na Conta Capital.
+                    Estamos vivendo um momento de adversidade nunca vivido pelos brasileiros. Em vista disso nossa Assembléia Geral Ordinária na qual é analisada a prestação de contas do exercício, que estava agendada para o dia 30/03/2020, por força do Decreto Estadual nº 48.809/2020 que impôs o distanciamento social foi suspensa, tendo o Banco Central do Brasil flexibilizado,  em virtude da pandemia do COVID-19 , o prazo final que anteriormente era até 30 de abril para até o dia 31 de julho de 2020. Em razão disso, a distribuição dos resultados aos associados referente ao exercício de 2019 ficou, da mesma forma, suspensa até a data da realização da referida AGO.
+<br><br>O Conselho de Administração da Sicredi Pernambucred, sensibilizado pelo momento em que a economia está passando, deliberou por antecipar a disponibilidade de resgate dos Juros ao Capital Social, creditados no dia 30/01/2020, na conta capital de cada associado, referentes ao exercício de 2019, antes da distribuição dos resultados referente ao mesmo exercício, em conformidade com a Resolução do Banco Central do Brasil 4.797/2020 que limitou os resgates na Conta Capital.
 <br><br>
 
-Veja abaixo os valores destinados a você:</span>   
+Veja abaixo o valor destinado a você:</span>   
                       </div>       
                     </div>
 
@@ -328,7 +328,7 @@ Veja abaixo os valores destinados a você:</span>
 
                     <div class="row" style="text-align:justify;padding:8px;">
                 
-                    <span>&nbsp;&nbsp;Isso é faz juntos por você.</span>  
+                    <span>&nbsp;&nbsp;Isso é fazer juntos por você.</span>  
 
                     </div>
                     
@@ -508,13 +508,13 @@ if(valorSolicitado > liquidoResgate){
                             }, 1000);
                       }
                       else{
-                          alert('ERRO NA CONEXÃO COM O SISTEMA! CONTATE O SUPORTE.');
+                          alert('Erro na conexão! Procure o administrador do sistema.');
 
                       } 
                       
                     },
                     error: function(){
-                        alert('Erro no servidor! Procure o administrador do sistema!');
+                        alert('Erro no servidor! Verifique sua conexão com a internet ou procure o administrador do sistema!');
                     }
                     });
 

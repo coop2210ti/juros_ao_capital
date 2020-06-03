@@ -62,6 +62,15 @@ if ((isset ($_SESSION["sobrasCpfcnpj"]) == true ) AND (isset ($_SESSION["sobrasP
     opacity: 1 !important; 
     }
 
+    #cover-spin {
+    position:fixed;
+    width:100%;
+    left:0;right:0;top:0;bottom:0;
+    background-color: rgba(255,255,255,0.7);
+    z-index:9999;
+    display:none;
+    }
+
     </style>
 
 </head>
@@ -72,6 +81,7 @@ if ((isset ($_SESSION["sobrasCpfcnpj"]) == true ) AND (isset ($_SESSION["sobrasP
     </div>
 
         
+<div id="cover-spin"><img src='src/img/bars.svg' style="height:110px;display:block;margin:auto;margin-top:350px;"></div>
 
 
 <div class="login-container">
@@ -214,11 +224,14 @@ $.ajax({
         url:"src/engine/login.php", 
         data:{cpfcnpj:cpfcnpj,password:password},  
         beforeSend:function(){
-            $('#spinner').empty();
-            $('#spinner').append("<img src='src/img/bars.svg' style='height:50px;display:block;margin:auto;'/>");
-
+            //$('#spinner').empty();
+            //$('#spinner').append("<img src='src/img/bars.svg' style='height:50px;display:block;margin:auto;'/>");
+            $('#cover-spin').show();
         },    
         success:function(response){
+
+            $('#cover-spin').hide();
+
             if(response==1){ 
                 window.location.href='main.php'
             } 
@@ -257,11 +270,15 @@ $.ajax({
         url:"src/engine/login.php", 
         data:{cpfcnpj:cpfcnpj,password:password},  
         beforeSend:function(){
-            $('#spinner').empty();
-            $('#spinner').append("<img src='src/img/bars.svg' style='height:50px;display:block;margin:auto;'/>");
-
+            //$('#spinner').empty();
+            //$('#spinner').append("<img src='src/img/bars.svg' style='height:50px;display:block;margin:auto;'/>");
+            $("#login").blur();
+            $('#cover-spin').show();
         },    
         success:function(response){
+
+            $('#cover-spin').hide();
+
             if(response==1){ 
                 window.location.href='main.php'
             } 
