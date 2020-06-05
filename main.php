@@ -404,7 +404,7 @@ Veja abaixo o valor destinado a você:</span>
                                <div class="form-group">
                                     <div class="col-lg-1">
                                     <label style="width:10px;">Valor&nbsp;resgate:</label>
-                                    <input style="width:150px;" type="text" id="valorSolicitado" class="form-control">
+                                    <input style="width:150px;" type="text" id="valorSolicitado" name="valorSolicitado" class="form-control">
                                 </div>
                                 </div>
 
@@ -450,10 +450,12 @@ Veja abaixo o valor destinado a você:</span>
 <script src="vendor/laravel-bootstrap-homer/scripts/homer.js"></script>
 <script src="vendor/laravel-bootstrap-homer/scripts/charts.js"></script>
 <script src="vendor/alertify/alertify.min.js" type="text/javascript"></script>
-<script src="vendor/maskmoney/jquery.maskMoney.min.js" type="text/javascript"></script>
+<!--<script src="vendor/maskmoney/jquery.maskMoney.min.js" type="text/javascript"></script>-->
 <script src="vendor/toastr/toastr.min.js"></script>
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script src="vendor/vanilla-masker/vanilla-masker.min.js"></script>
 
 
 
@@ -468,7 +470,10 @@ $("#getModal").on('click', function(){
 
 });
 
-$('#valorSolicitado').maskMoney({ thousands: '.', decimal: ',' });
+//$('#valorSolicitado').maskMoney({ thousands: '.', decimal: ',' });
+
+VMasker(document.querySelector('input[name="valorSolicitado"]')).maskMoney();
+
 
   jQuery(document).bind("keyup keydown", function(e){
     if(e.ctrlKey && e.keyCode == 80){

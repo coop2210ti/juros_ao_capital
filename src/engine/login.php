@@ -87,6 +87,7 @@ else{
 
 
 //PAGAMENTO DE JUROS AO CAPITAL 
+$password = ltrim($password,'0');
 $query = mysqli_query($con,"SELECT * FROM valores WHERE cpf_cnpj = '$cpfcnpj' AND senha = '$password' AND bloqueio = 'nao' ");
 
 $num = mysqli_num_rows($query);
