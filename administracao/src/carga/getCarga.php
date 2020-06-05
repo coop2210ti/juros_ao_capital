@@ -19,7 +19,7 @@ $diaAnterior = date('Y-m-d',strtotime("-1 day", strtotime($dataIndicada)));
 
 $dataCarga = inverteData(date('d/m/Y',strtotime("+1 day")));
 
-$query = mysqli_query($con, "SELECT * FROM `valores` WHERE `dateFormated` BETWEEN ('2019-09-05 15:01:00') AND ('2019-09-11 15:00:59')");
+$query = mysqli_query($con, "SELECT * FROM valores WHERE date_formated BETWEEN ('2020-06-03 15:01:00') AND ('2020-06-05 15:00:59')");
 $num = mysqli_num_rows($query);
 
 if($num == 0){
@@ -38,10 +38,11 @@ for($x=0;$x<$num;$x++) {
 $resul = mysqli_fetch_assoc($query);
 $cpf = $resul['cpf'];
 
-    $cc = str_pad(insertInPosition($resul['cc'], -1, '-'), 7, '0', STR_PAD_LEFT);
-    $valor = str_pad(number_format($resul['valorResgate'], 2, '', ''), 15, '0', STR_PAD_LEFT);
+    //$cc = str_pad(insertInPosition($resul['cc'], -1, '-'), 7, '0', STR_PAD_LEFT);
+    $cc = str_pad($resul['cc'], 7, '0', STR_PAD_LEFT);
+    $valor = str_pad(number_format($resul['valor_resgate'], 2, '', ''), 15, '0', STR_PAD_LEFT);
 
-    $contentLine = $dataCarga.$valor."13".$cc."0000000000"."00000000"."RESGRE18";
+    $contentLine = $dataCarga.$valor."13".$cc."0000000000"."00000000"."JUROCP19";
 
 
     fwrite($fp, $contentLine."\r\n");
