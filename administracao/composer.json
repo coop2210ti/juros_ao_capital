@@ -1,7 +1,0 @@
-{
-     "require": {
-         "phpseclib/mcrypt_compat": "dev-master"
-          
-      },
-     "minimum-stability": "dev"
-}
