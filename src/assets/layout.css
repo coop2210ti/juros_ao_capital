@@ -19,7 +19,8 @@ input
 {
 	border: 1px solid #02ae0b;
     margin-bottom: 7px;
-    text-align: center;
+	text-align: center;
+	border-radius: 10px;
 }
 
 
@@ -35,7 +36,7 @@ input[type=button]
 
 {
 	background-color: #64C832;
-	border-bottom: 3px solid #64C832;
+	border-bottom: 1px solid #64C832;
 	border-top: 1px solid #64C832;
 	border-right: 1px solid #64C832;
 	border-left: 1px solid #64C832;
@@ -44,6 +45,8 @@ input[type=button]
 	text-transform: uppercase;
 	border-radius: 5px;
 	padding: 5px 8px;
+	width: 230px;
+	border-radius: 10px;
 }
 
 h1,
@@ -69,7 +72,7 @@ h1
 input[type=text]
 {
    
-    font-family:Exo 2;color:#64C832;font-weight:200;font-size:18px;line-height:1em
+    font-family:Exo 2;color:#64C832;font-weight:200;font-size:18px;line-height:0em
 }
 img {
     max-width:220px;
@@ -79,10 +82,29 @@ img {
     left: 100px;
 }
 form label {
-    font-family:Arial, Helvetica, sans-serif;
+    font-family: 'IBM Plex Mono', monospace;
     font-size:14px;
     color:rgb(0, 102, 26);
     font-weight:bold;
     float:left;
 }
+.select {
+	
+	 height: 20px; 
+	
+	}
+	
+	.select{
+	
+		
+		padding: 5px;
+		display: grid;
+		grid-template-columns: 120px ;
+		margin-bottom: 0rem;
+		margin:  30 auto; 
+		border-radius: 10px;
 
+	}
+	.tipo{color: #02ae0b;
+	}
+	

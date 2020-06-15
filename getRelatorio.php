@@ -84,7 +84,7 @@ $diaAnterior = date('Y-m-d',strtotime("-1 day", strtotime($dataIndicada)));
 
 $dataCarga = inverteData(date('d/m/Y',strtotime("+1 day")));*/
 
-$password           = $_GET['senha'];
+//$password           = $_GET['senha'];
 $password_interno   = 'sobras@2020';
 
 $tipo               = $_GET['tipo'];
@@ -95,7 +95,7 @@ $data_inicial       = inverteDataToDatabase($_GET['data_inicial']);
 $data_final         = inverteDataToDatabase($_GET['data_final']);
 
 
-if($password != $password_interno){
+/*if($password != $password_interno){
 
     echo 'Senha inválida!';
     exit;
@@ -104,7 +104,7 @@ elseif($data_inicial > $data_final){
 
     echo 'Data inicial não pode ser maior que data final!';
     exit;
-}
+}*/
 
 $query  = mysqli_query($con, "SELECT * FROM valores WHERE date_formated BETWEEN ('$data_inicial 15:01:00') AND ('$data_final 15:00:59')");
 $num    = mysqli_num_rows($query);
