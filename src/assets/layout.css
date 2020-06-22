@@ -1,4 +1,4 @@
-*
+/*
 {
     font-family: "Arial";
     text-align: center;
@@ -74,6 +74,7 @@ input[type=text]
    
     font-family:Exo 2;color:#64C832;font-weight:200;font-size:18px;line-height:0em
 }
+*/
 img {
     max-width:220px;
     max-height:150px;
@@ -81,6 +82,9 @@ img {
     height: auto;
     left: 100px;
 }
+
+
+ /*
 form label {
     font-family: 'IBM Plex Mono', monospace;
     font-size:14px;
@@ -89,6 +93,7 @@ form label {
     float:left;
 }
 .select {
+	
 	
 	 height: 20px; 
 	
@@ -108,3 +113,28 @@ form label {
 	.tipo{color: #02ae0b;
 	}
 	
+
+	th
+{
+	background-color: #5b7b1d;
+	color: #ffffff;
+	text-transform: uppercase;
+	padding: 3px;
+}
+
+tr:nth-child(even)
+{
+	background-color: #f3e6f7;
+}
+
+tr:nth-child(odd)
+{
+	background-color: #ffffff;
+}
+
+td
+{
+	padding: 3px;
+}
+ */
+ 
