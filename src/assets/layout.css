@@ -138,3 +138,16 @@ td
 }
  */
  
+ .select{
+	
+		
+	padding: 5px;
+	display: grid;
+	grid-template-columns: 120px ;
+	margin-bottom: 0rem;
+	margin:  30 auto; 
+	border-radius: 10px;
+
+}
+.tipo{color: #02ae0b;
+}

@@ -116,6 +116,13 @@ hr {
                                 <label class="control-label" for="data_final">Data Carga:</label>
                                 <input type="text" title="Informe a data final" id="data_carga" class="form-control  data">
                             </div>
+                            <div class="select">    
+            <select id="tipo"> 
+                 <option class="op" value="txt">TXT</option>
+                 <option class="op" value="csv">CSV</option>
+             </select>
+     </div>
+     <br><br>
                         </form>
                         <button id="gerarArquivo" class="btn btn-success btn-block">Gerar Arquivo</button>
                 </div>
